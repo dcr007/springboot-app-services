@@ -21,7 +21,7 @@ Use Google Jib to create a Docker Image `order-service:0.0.5-SNAPSHOT` that you 
 
 1. To create `order-service:0.0.5-SNAPSHOT` by using `gradlew` with `Java 17`
 ```shell
-./gradlew clean build jibDockerBuild -x test
+mvn clean package jib:dockerBuild -DskipTests
 ```
 
 2. Then, to spin up all the `docker-compose.yml`
@@ -53,41 +53,17 @@ curl -X PATCH http://localhost:8080/orders/1 \
 curl -X DELETE http://localhost:8080/orders/1
 
 ```
+3. Send sample requests to `Payment Service`
+```http request
+GET http://localhost:8081/payments/getAllOrders
+```
+4. CPU test to `Payment Service`
+``` http request to process payment for <OrderId>
+``` low CPU test
+GET http://localhost:8081/payments/processPayment/3
 
-4. Access Grafana to observe metrics, traces, logs at
-```
-http://localhost:3000
-```
+``` High CPU test : don't go above processPayment/45
 
----
-
-#### Be aware at step 1, the `docker image` is created for ARM architecture (MAC M1)
-#### If you're in linux, please change the following line in `build.gradle` file
-```yaml
-platforms {
-    platform {
-        architecture = 'arm64'
-        os = 'linux'
-    }
-}
+GET http://localhost:8081/payments/processPayment/32
 ```
-to
-```yaml
-platforms {
-    platform {
-        architecture = 'amd64'
-        os = 'linux'
-    }
-}
-```
-then run
-```shell
-./gradlew clean build jibDockerBuild -x test
-```
-
-#### Maven Setup
-
-```shell
- mvn clean package jib:dockerBuild -DskipTests
-```
----
+5. Access Grafana to observe metrics, traces, logs at ```  http://localhost:3000 ```
