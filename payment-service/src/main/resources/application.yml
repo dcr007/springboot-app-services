@@ -3,10 +3,10 @@ spring:
     name: payment-process-service
 server:
     port: 8081
-management:
-  otlp:
-    metrics:
-      export:
-        enabled: true
-        url: http://localhost:4318/v1/metrics
+#management:
+#  otlp:
+#    metrics:
+#      export:
+#        enabled: true
+#        url: http://localhost:4318/v1/metrics
 

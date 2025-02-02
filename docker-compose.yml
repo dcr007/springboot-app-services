@@ -23,7 +23,7 @@ services:
       # Logs are disabled by default
       OTEL_LOGS_EXPORTER: "otlp"
     ports:
-      - "8080:8080"
+      - "8081:8081"
     depends_on:
       - order-service
       - collector

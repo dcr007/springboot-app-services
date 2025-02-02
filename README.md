@@ -39,15 +39,15 @@ curl -X POST http://localhost:8080/orders \
      -H "Content-Type: application/json" \
      -d '{
            "id": 4,
-           "customer_id": 4,
-           "order_date": "2023-11-25T23:33:12.130+02:00",
-           "total_amount": 100.50
+           "customerId": 4,
+           "orderDate": "2023-11-25T23:33:12.130+02:00",
+           "totalAmount": 100.50
          }'
          
 curl -X PATCH http://localhost:8080/orders/1 \
      -H "Content-Type: application/json" \
      -d '{
-           "total_amount": 120.75
+           "totalAmount": 120.75
          }'
 
 curl -X DELETE http://localhost:8080/orders/1
