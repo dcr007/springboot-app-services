@@ -1,0 +1,29 @@
+@startuml
+!theme blueprint
+title Observablity via "OpenTelemetry Collector"\n\n
+
+interface HTTP
+component "Spring Boot" <<OpenTelemetry-Java Agent>> as springBoot
+component "Spring Boot Client" <<MicroMeter>> as springBootClient
+component "OpenTelemetry Collector" as otelCollector
+database "Prometheus" as prometheus <<Metrics DB Time-Series>>
+component "Grafana Dashboard" as grafana
+database "Jaeger" <<Tracing-DB>> as jager
+database "Loki" as loki <<Logs DB>>
+
+database "POSTGRES Database" as orders <<RDBMS>>
+
+HTTP .right. springBootClient
+springBoot -down-> orders : jdbc
+springBootClient <-right-> springBoot : REST
+
+springBoot -down-> otelCollector : OTLP
+springBootClient -down-> otelCollector : OTLP
+
+otelCollector -down-> prometheus : <<pull prometheus>> /metrics
+otelCollector -down-> jager : OTLP
+otelCollector -down-> loki : otlphttp
+grafana <-up-> prometheus : HTTP
+grafana <-up-> loki : HTTP
+grafana <-up-> jager : HTTP
+@enduml
