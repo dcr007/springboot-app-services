@@ -1,6 +1,6 @@
 # Spring Boot observability via OpenTelemetry
 
-![img.png](img.png)
+![img.png](PlantUML/architecture.png)
 
 
 ## OpenTelemetry data pipeline
@@ -29,6 +29,8 @@ mvn clean package jib:dockerBuild -DskipTests
 docker compose up -d
 ```
 ### Steps to Execute the API requests
+
+![sequence.png](PlantUML/sequence.png)
 
 1. Send sample requests to `Order Service`
     

@@ -1,5 +1,5 @@
 @startuml
-!theme blueprint
+!theme crt-amber
 title Observablity via "OpenTelemetry Collector"\n\n
 
 interface HTTP
