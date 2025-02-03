@@ -12,11 +12,10 @@ datasources:
     version: 1
     editable: false
     jsonData:
-      httpMethod: GET
+      httpMethod: POST
       exemplarTraceIdDestinations:
         - datasourceUid: jaeger
           name: trace_id
-
   - name: Loki
     type: loki
     uid: loki

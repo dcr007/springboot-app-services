@@ -25,45 +25,65 @@ mvn clean package jib:dockerBuild -DskipTests
 ```
 
 2. Then, to spin up all the `docker-compose.yml`
-```
+```shell
 docker compose up -d
 ```
+### Steps to Execute the API requests
 
-3. Send sample requests to `Order Service`
-```http request
-GET http://localhost:8080/orders/1
-GET http://localhost:8080/orders/2
-GET http://localhost:8080/orders/3
+1. Send sample requests to `Order Service`
+    
+    ```shell 
+    curl -X GET http://localhost:8080/orders/1
+    ```
+    ```shell 
+    curl -X GET http://localhost:8080/orders/4
+    ```
+    ```shell 
+    curl -X GET http://localhost:8080/orders/4
+    ```
+    ```shell 
+    curl -X POST http://localhost:8080/orders \
+         -H "Content-Type: application/json" \
+         -d '{
+               "id": 4,
+               "customerId": 4,
+               "orderDate": "2023-11-25T23:33:12.130+02:00",
+               "totalAmount": 100.50
+             }'
+    ```
+    ```shell 
+    curl -X GET http://localhost:8080/orders/4
+    ```
+    ```shell 
+    curl -X PATCH http://localhost:8080/orders/1 \
+         -H "Content-Type: application/json" \
+         -d '{
+               "totalAmount": 120.75
+             }'
+    ```
+    ```shell 
+    curl -X GET http://localhost:8080/orders/1
+    ```
+    ```shell 
+    curl -X DELETE http://localhost:8080/orders/4
+    ```
+2. Send sample requests to `Payment Service` on api: `getAllOrders`
 
-curl -X POST http://localhost:8080/orders \
-     -H "Content-Type: application/json" \
-     -d '{
-           "id": 4,
-           "customerId": 4,
-           "orderDate": "2023-11-25T23:33:12.130+02:00",
-           "totalAmount": 100.50
-         }'
-         
-curl -X PATCH http://localhost:8080/orders/1 \
-     -H "Content-Type: application/json" \
-     -d '{
-           "totalAmount": 120.75
-         }'
+    ```shell 
+    curl -X GET http://localhost:8081/payments/getAllOrders
+    ```
+    
+    * http request to process `payment-service` for <`OrderId`> . 
+       
+         * Low CPU test, execute the below curl for values from 1 to 10.
+           ```shell
+           curl -X GET http://localhost:8081/payments/processPayment/3
+            ```
+         * For High CPU test : don't go above `processPayment/45`
+           ```shell
+              curl -X GET http://localhost:8081/payments/processPayment/42
+            ```
 
-curl -X DELETE http://localhost:8080/orders/1
+### Grafana
 
-```
-3. Send sample requests to `Payment Service`
-```http request
-GET http://localhost:8081/payments/getAllOrders
-```
-4. CPU test to `Payment Service`
-``` http request to process payment for <OrderId>
-``` low CPU test
-GET http://localhost:8081/payments/processPayment/3
-
-``` High CPU test : don't go above processPayment/45
-
-GET http://localhost:8081/payments/processPayment/32
-```
-5. Access Grafana to observe metrics, traces, logs at ```  http://localhost:3000 ```
+Access Grafana to observe metrics, traces, logs at ```  http://localhost:3000 ```

@@ -18,6 +18,11 @@
         <image.name>payment-service</image.name>
     </properties>
 <dependencies>
+   <!-- <dependency>
+        <groupId>io.opentelemetry.javaagent</groupId>
+        <artifactId>opentelemetry-javaagent</artifactId>
+        <scope>runtime</scope>
+    </dependency>-->
 
     <dependency>
         <groupId>org.springframework.boot</groupId>
