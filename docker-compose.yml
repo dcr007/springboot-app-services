@@ -10,6 +10,7 @@ services:
       OTEL_LOGS_EXPORTER: "otlp"
       MANAGEMENT_OTLP_METRICS_EXPORT_ENABLED: true
       MANAGEMENT_OTLP_METRICS_EXPORT_URL: http://collector:4318/v1/metrics
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "health,prometheus"
     ports:
       - "8080:8080"
     depends_on:
@@ -26,6 +27,7 @@ services:
       OTEL_LOGS_EXPORTER: "otlp"
       MANAGEMENT_OTLP_METRICS_EXPORT_ENABLED: true
       MANAGEMENT_OTLP_METRICS_EXPORT_URL: http://collector:4318/v1/metrics
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "health,prometheus"
     ports:
       - "8081:8081"
     depends_on:
@@ -67,7 +69,7 @@ services:
       - --config.file=/etc/prometheus/prometheus.yml
       - --enable-feature=exemplar-storage
       - --web.enable-remote-write-receiver
-    restart: always
+#    restart: always
     ports:
       - '9090:9090'
     depends_on:
@@ -78,6 +80,8 @@ services:
     image: grafana/grafana
     volumes:
       - ./docker/grafana/grafana-datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
+      - ./docker/grafana/dashboards/prometheus_java_overview.json:/var/lib/grafana/dashboards/prometheus_java_overview.json
+      - ./docker/grafana/main-dashboard.yml:/etc/grafana/provisioning/dashboards/main.yml
     restart: always
     ports:
       - "3000:3000"

@@ -38,7 +38,7 @@ docker compose up -d
     curl -X GET http://localhost:8080/orders/1
     ```
     ```shell 
-    curl -X GET http://localhost:8080/orders/4
+    curl -X GET http://localhost:8080/orders/2
     ```
     ```shell 
     curl -X GET http://localhost:8080/orders/4
@@ -64,7 +64,7 @@ docker compose up -d
              }'
     ```
     ```shell 
-    curl -X GET http://localhost:8080/orders/1
+    curl -X GET http://localhost:8080 
     ```
     ```shell 
     curl -X DELETE http://localhost:8080/orders/4
@@ -83,7 +83,7 @@ docker compose up -d
             ```
          * For High CPU test : don't go above `processPayment/45`
            ```shell
-              curl -X GET http://localhost:8081/payments/processPayment/42
+              curl -X GET http://localhost:8081/payments/processPayment/39
             ```
 
 ### Grafana
