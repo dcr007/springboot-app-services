@@ -21,7 +21,7 @@ Use Google Jib to create a Docker Image `order-service:0.0.5-SNAPSHOT` that you 
 
 1. To create `order-service:0.0.5-SNAPSHOT` by using `gradlew` with `Java 17`
 ```shell
-mvn clean package jib:dockerBuild -DskipTests
+mvn clean package jib:dockerBuild -DskipTests --offline
 ```
 
 2. Then, to spin up all the `docker-compose.yml`
