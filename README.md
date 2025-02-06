@@ -28,7 +28,7 @@ mvn clean package jib:dockerBuild -DskipTests --offline
 ```shell
 docker compose up -d
 ```
-### Steps to Execute the API requests
+### Steps to Execute the API requests using curl
 
 ![sequence.png](PlantUML/sequence.png)
 
@@ -85,7 +85,18 @@ docker compose up -d
            ```shell
               curl -X GET http://localhost:8081/payments/processPayment/39
             ```
-
+### To run Gatling tests
+1. To execute  OrderService Load tests :
+   ```shell 
+    cd order-service
+   ```
+   ```shell 
+     mvn gatling:test -pl order-service -Dgatling.simulationClass=ews.ondemand.services.orderservice.OrderServiceSimulation
+   ```
+   
+   ```shell 
+    mvn gatling:test -pl payment-service -Dgatling.simulationClass=ews.ondemand.services.paymentservice.PaymentServiceSimulation    
+   ```
 ### Grafana
 
 Access Grafana to observe metrics, traces, logs at ```  http://localhost:3000 ```

@@ -36,6 +36,8 @@
         <micrometer-registry-otlp>1.14.3</micrometer-registry-otlp>
         <postgresql>42.6.0</postgresql>
         <lombok>1.18.30</lombok>
+        <gatling.version>3.9.1</gatling.version>
+        <gatling-maven-plugin.version>4.3.0</gatling-maven-plugin.version>
     </properties>
 
 
@@ -124,6 +126,20 @@
                 <artifactId>spring-boot-starter-test</artifactId>
                 <scope>test</scope>
                 <version>${spring-boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.gatling.highcharts</groupId>
+                <artifactId>gatling-charts-highcharts</artifactId>
+                <version>${gatling.version}</version>
+                <!--      <scope>test</scope>-->
+            </dependency>
+
+            <dependency>
+                <groupId>io.gatling</groupId>
+                <artifactId>gatling-test-framework</artifactId>
+                <version>${gatling.version}</version>
+                <!--      <scope>test</scope>-->
             </dependency>
         </dependencies>
     </dependencyManagement>
