@@ -19,11 +19,11 @@
     </properties>
 
     <dependencies>
-        <dependency>
+    <!--    <dependency>
             <groupId>io.opentelemetry.javaagent</groupId>
             <artifactId>opentelemetry-javaagent</artifactId>
             <scope>runtime</scope>
-        </dependency>
+        </dependency>-->
 
         <!-- Spring Boot Starter Dependencies -->
         <dependency>
