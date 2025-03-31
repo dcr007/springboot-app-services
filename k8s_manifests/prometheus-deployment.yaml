@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: prometheus
+  name: prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: prometheus
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: prometheus
+    spec:
+      containers:
+      - args:
+        - --config.file=/etc/prometheus/prometheus.yml
+        - --enable-feature=exemplar-storage
+        - --web.enable-remote-write-receiver
+        image: prom/prometheus
+        imagePullPolicy: ""
+        name: prometheus
+        ports:
+        - containerPort: 9090
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/prometheus/prometheus.yml
+          name: prometheus-claim0
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: prometheus-claim0
+        persistentVolumeClaim:
+          claimName: prometheus-claim0
+status: {}
