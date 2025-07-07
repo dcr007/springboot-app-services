@@ -1,22 +1,8 @@
-# Spring Boot observability via OpenTelemetry
-
-![img.png](PlantUML/architecture.png)
-
-
-## OpenTelemetry data pipeline
-
-An Observability framework and toolkit designed to create and manage telemetry data such as traces, metrics, and logs.
-Vendor and tool-agnostic, meaning that it can be used with a broad variety of Observability backends.
-
-* Instrument your workloads to push (or offer) the telemetry data to a processing/collecting element -i.e. OpenTelemetry Collector-
-* Configure OpenTelemetry Collector to receive or pull the data from diverse workloads
-* Configure OpenTelemetry Collector to process the data -i.e adding special tags, filtering data-
-* Configure OpenTelemetry Collector to push (or offer) the data to compatible backends
-* Configure and use the backends to receive (or pull) the data from the collector, to allow analysis, alarms, AI ... pretty much any case that you can think about with data
+# Spring Boot App
 
 ### Setup 
 
-Use Google Jib to create a Docker Image `order-service:0.0.5-SNAPSHOT` that you see in `docker-compose.yml` file.
+Use Google Jib to create a Docker Image `order-service:0.0.1-SNAPSHOT` `payment-service:0.0.1-SNAPSHOT` that you see in `docker-compose.yml` file.
 
 
 1. To create `order-service:0.0.5-SNAPSHOT` by using `gradlew` with `Java 17`
@@ -37,6 +23,10 @@ docker compose up -d
     ```shell 
     curl -X GET http://localhost:8080/orders/1
     ```
+     ```shell 
+    curl -X GET http://127.0.0.1:37353/orders/2
+    ```
+   
     ```shell 
     curl -X GET http://localhost:8080/orders/2
     ```
@@ -53,6 +43,17 @@ docker compose up -d
                "totalAmount": 100.50
              }'
     ```
+   ```shell 
+   curl -X POST http://127.0.0.1:37353/orders \
+   -H "Content-Type: application/json" \
+   -d '{
+   "id": 34,
+   "customerId": 4,
+   "orderDate": "2023-11-25T23:33:12.130+02:00",
+   "totalAmount": 100.50
+   }'
+    ```
+
     ```shell 
     curl -X GET http://localhost:8080/orders/4
     ```
@@ -73,6 +74,9 @@ docker compose up -d
 
     ```shell 
     curl -X GET http://localhost:8081/payments/getAllOrders
+    ```
+```shell 
+   curl -X GET http://127.0.0.1:34151/payments/getAllOrders
     ```
     
     * http request to process `payment-service` for <`OrderId`> . 
@@ -96,7 +100,3 @@ docker compose up -d
    
    ```shell 
     mvn gatling:test -pl payment-service -Dgatling.simulationClass=ews.ondemand.services.paymentservice.PaymentServiceSimulation    
-   ```
-### Grafana
-
-Access Grafana to observe metrics, traces, logs at ```  http://localhost:3000 ```
