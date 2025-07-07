@@ -16,8 +16,6 @@ docker compose up -d
 ```
 ### Steps to Execute the API requests using curl
 
-![sequence.png](PlantUML/sequence.png)
-
 1. Send sample requests to `Order Service`
     
     ```shell 
